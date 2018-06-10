@@ -283,8 +283,8 @@ if (PARAM['chosen_model'] == 'nvidia'):
  # train_steps_per_epoch = PARAM['samples_per_epoch']
   #validation_steps_per_epoch = len(validation_data)
   
-  train_steps_per_epoch = 6 * PARAM['bathsize'] * int(len(train_data)/PARAM['batchsize'])
-  validation_steps_per_epoch = 3 * PARAM['bathsize'] * int(len(validation_data)/PARAM['batchsize'])
+  train_steps_per_epoch = 6 * PARAM['batchsize'] * int(len(train_data)/PARAM['batchsize'])
+  validation_steps_per_epoch = 3 * PARAM['batchsize'] * int(len(validation_data)/PARAM['batchsize'])
 
   print('train_steps_per_epoch {}'.format(train_steps_per_epoch))
   print('validation_steps_per_epoch {}'.format(validation_steps_per_epoch))
