@@ -57,54 +57,83 @@ def plot_loss(model_history):
         plt.show()
         
 
+def load_images_and_measurements(lines):
+    car_images = []
+    steering_angles  = []
+    
+    for row in lines:
+        steering_center = float(row[3])
+
+        #create adjusted steering measurements for the side camera images
+        correction = 0.2
+        steering_left = steering_center + correction
+        steering_right = steering_center - correction
+        
+        center_path = PARAM['path2data'] + '/IMG/' + row[0].split('/')[-1]
+        left_path = PARAM['path2data'] + '/IMG/' + row[1].split('/')[-1]
+        right_path = PARAM['path2data'] + '/IMG/' + row[2].split('/')[-1]
+        
+        img_center = np.asarray(Image.open(center_path))
+        img_left = np.asarray(Image.open(left_path))
+        img_right = np.asarray(Image.open(right_path))
+
+        car_images.extend([img_center, img_left, img_right])
+        steering_angles.extend([steering_center, steering_left, steering_right])
+
+    return car_images, steering_angles    
+
+
+def flip_image_steering(image, steering_angle):
+    flipped_image = np.fliplr(image)
+    flipped_steering_angle = steering_angle * -1.0
+    return flipped_image, flipped_steering_angle
+
+
+def augment_data (images, measurements):
+    augmented_images, augmented_measurements = [], []
+
+    for image, steering_angle in zip(images, measurements):
+        flipped_image, flipped_steering_angle = flip_image_steering(image, steering_angle)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+	
+	#update flipped image and measurements
+        augmented_images.append(flipped_image)
+        augmented_measurements.append(flipped_steering_angle)
+
+	#update	HSV image and measurement
+        augmented_images.append(image)
+        augmented_measurements.append(steering_angle)
+        
+    return augmented_images, augmented_measurements
+
+
 def data_generator(samples, batch_size):
-    print(' data generator seeding ...')
+    print('data generator seeding ...')
     num_samples = len(samples)
     
     while 1:        #Starting the co-routine
         shuffle(samples)
-        for offset in range(0, num_samples, batch_size):
-            batch_samples = samples[offset:offset+batch_size]
-           
-            images = []
-            angles = []
-            
-            for row in batch_samples:
-                steering_center = float(row[3])
-                 #create adjusted steering measurements for the side camera images
-                correction = 0.10
-                steering_left = steering_center + correction
-                steering_right = steering_center - correction
+        
+        X_data = []
+        y_data = []
 
-                center_path = PARAM['path2data'] + '/IMG/' + row[0].split('/')[-1]
-                #print(center_path)
-                img_center = cv2.imread(center_path)
-                img_center = cv2.cvtColor(img_center, cv2.COLOR_BGR2HSV)
-                
-                left_path = PARAM['path2data'] + '/IMG/' + row[1].split('/')[-1]
-                #print(left_path)
-                img_left = cv2.imread(left_path)
-                img_left = cv2.cvtColor(img_left, cv2.COLOR_BGR2HSV)
-                
-                right_path = PARAM['path2data'] + '/IMG/' + row[2].split('/')[-1]
-                #print(right_path)
-                img_right = cv2.imread(right_path)
-                img_right = cv2.cvtColor(img_right, cv2.COLOR_BGR2HSV)
-                
-                #Flipping
-                flipped_image_left = np.fliplr(img_left)
-                flipped_steering_angle_left = steering_left * -1.0
-                
-                flipped_image_right = np.fliplr(img_right)
-                flipped_steering_angle_right = steering_right * -1.0
-                
-                images.extend([img_center, img_left, img_right, flipped_image_left, flipped_image_right])
-                angles.extend([steering_center, steering_left, steering_right, flipped_steering_angle_left, flipped_steering_angle_right])
-                
+        for i, line in enumerate(samples):
+            images, measurements = load_images_and_measurements([line])
             
-            X_train = np.array(images)
-            y_train = np.array(angles)
-            yield sklearn.utils.shuffle(X_train, y_train)
+            #flip the image file
+            augmented_images, augmented_measurements = augment_data(images, measurements)
+
+            #Add the generated data into yeild array
+            X_data.extend(augmented_images)
+            y_data.extend(augmented_measurements)
+
+
+             #Check if i is equal to 
+            if i == (num_samples - 1) or  len (X_data) > batch_size:
+                yield sklearn.utils.shuffle(np.array(X_data[:batch_size]), np.array(y_data[:batch_size]))
+                X_data[batch_size:]
+                y_data[batch_size:]    
+
              
 
 
