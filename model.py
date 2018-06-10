@@ -280,8 +280,11 @@ validation_generator = data_generator(validation_data, batch_size=PARAM['batchsi
 if (PARAM['chosen_model'] == 'nvidia'):
   nvidia_model = nvidia_model(summary=True)
   nvidia_model.compile(optimizer='adam', loss='mse')
-  train_steps_per_epoch = PARAM['samples_per_epoch']
-  validation_steps_per_epoch = len(validation_data)
+ # train_steps_per_epoch = PARAM['samples_per_epoch']
+  #validation_steps_per_epoch = len(validation_data)
+  
+   train_steps_per_epoch = 6 * PARAM['bathsize'] * int(len(train_data)/PARAM['batchsize'])
+   validation_steps_per_epoch = 3 * PARAM['bathsize'] * int(len(validation_data)/PARAM['batchsize'])
 
   print('train_steps_per_epoch {}'.format(train_steps_per_epoch))
   print('validation_steps_per_epoch {}'.format(validation_steps_per_epoch))
@@ -307,8 +310,8 @@ if (PARAM['chosen_model'] == 'lenet'):
 #train_steps_per_epoch = 2 * PARAM['batchsize'] * int(len(train_data)/PARAM['batchsize'])
 #validation_steps_per_epoch = PARAM['batchsize'] * int(len(validation_data)/PARAM['batchsize']) 
 
-  train_steps_per_epoch = PARAM['samples_per_epoch']
-  validation_steps_per_epoch = len(validation_data) 
+  train_steps_per_epoch = 6 * PARAM['bathsize'] * int(len(train_data)/PARAM['batchsize'])
+  validation_steps_per_epoch = 3 * PARAM['bathsize'] * int(len(validation_data)/PARAM['batchsize'])
 
   print('train_steps_per_epoch {}'.format(train_steps_per_epoch))
   print('validation_steps_per_epoch {}'.format(validation_steps_per_epoch))
