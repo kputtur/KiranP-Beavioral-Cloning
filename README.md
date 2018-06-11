@@ -41,7 +41,7 @@ The goals / steps of this project are the following:
 My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
+* model-new.h5 containing a trained convolution neural network 
 * writeup_report.md or writeup_report.pdf summarizing the results
 * run7.mp4 -> my video of car driving through Track 1 (Jungle Track)
 * Training.ipynb training steps and augmentation visualization
