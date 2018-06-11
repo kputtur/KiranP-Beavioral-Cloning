@@ -17,14 +17,18 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/hist1.png "Camera Angle Distribution"
-[image2]: ./examples/hist2.png "Zero Angle Removal "
-[image3]: ./examples/actual1.png "actual image"
-[image4]: ./examples/augmented.png "augumented image"
-[image5]: ./examples/nvidia.png    "Nvidia Model"
-[image6]: ./examples/lenet.png     "Normal Image"
-[image7]: ./examples/model.png     "Model Image"
-[image8]: ./examples/plotloss.png     "Plotting Loss"
+[image1]: ./examples/lenet.jpg "LeNET Model"
+[image2]: ./examples/lenet_black_model.png "LeNET Model "
+[image3]: ./examples/lenet_loss.jpg "LeNET Loss plotted "
+[image4]: ./examples/nvidia_plot_loss.png "NVIDIA Plotted Training vs Validation Losses"
+[image5]: ./examples/pverfitting.png "Over Fitting"
+[image6]: ./examples/histogram_1.png    "Histogram"
+[image7]: ./examples/histogram_2.png     "Histogram without Zero Lines"
+[image8]: ./examples/histogram_3.png     "Right, Left, Center images with correction"
+[image9]: ./examples/images_1.png         "Initial Image Set"
+[image10]: ./examples/images_2.png        "BGR2HSV color modification"
+[image11]: ./examples/lambda_layer.png    "Lambda Layer"
+[image12]: ./examples/cropping.png         "Cropping"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation. 
@@ -143,20 +147,21 @@ I have tried two models one is
 
 1. LENET Model 
 
-![alt text][image6]
+![lenetloss][image2]
 
 
 In the LeNET Model I start with Lambda layer, followed by the Cropping layer -> Followed by a Max Pooling 2D interconnected with a convnet 2D layer, with succession of flattening out the inputs and then Calling Dense layers.
 
 There is no drop out since I thought this could be underfitting Model and there are no unnecessary additional tensors that we need to drop.
 
+![lenet Model][image2]
+
+
 This is the Training vs Validation Loss plotted
-![trainingvsvalidation][image8]
+![trainingvsvalidation][image3]
 
 2. Nvidia Model
-![architecture] [image5]
-
-
+![NVIDIA Architecture](https://devblogs.nvidia.com/wp-content/uploads/2016/08/cnn-architecture-624x890.png) 
 
 Nvidia model shown above and which is widely discussed in the paper here : http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
 https://devblogs.nvidia.com/deep-learning-self-driving-cars/
@@ -174,14 +179,14 @@ This model flows like this.
 
 This shows the Plotted Training vs Validation Loss for Nvidia Model.
 
-![trainingvsvalidation-2] [image6]
+![Nvidia Training Losses] [image4]
 
 This also dependended on the training data, enough training data provided better fitting and lower validation loss compared to fewer training data.
 
 #### 2. Attempts to reduce overfitting in the model
 
 During the course of training I found out that while my training loss is low but validation loss seems to be mounting as you can see from the below figure
-![alt text] [image8]
+![overfitting] [image5]
 
 As per the class notes When the model predicts well on the training set but poorly on the validation set (for example, low mean squared error for training set, high mean squared error for validation set), this is evidence of overfitting. 
 
@@ -251,36 +256,38 @@ The final model architecture (function model_nvidia) consisted of a convolution 
 | Mean Squared Error	      | Softmax cross entropy 						                          |
 | AdamOptimizer               | Optimize the model with a decaying learning rate                      |
 
+Note: I am making some changes to the model to add Normalization to improve the model but that is work in progress for now.
+
 #### 3. Creation of the Training Set & Training Process
 
 If you look at the collected data histogram you can clearly see that the most of the samples have centered around steering angle 0.
 
-![Histogram1][image1]
+![Histogram1][image6]
 
 
 We can remove some of the 0 steering angle in the random fashion to get evenly distributed lines.
 
-![Histogram2][image2]
+![Histogram2][image7]
 
 After adding right, left and center images together and adding the correction, finally the histogram looks evenly distributed.
-![histogram3][image3]
+![histogram3][image8]
 
 
 After the collection process, I had X number of data points. I then preprocessed this data by following methods
 1. Adding the Image to image collection
-![original image][image4]
+![original image][image9]
 
 
 
 2. Processing through the RGB2HSV 
-![rgb2hsv][image5]
+![rgb2hsv][image10]
 
 
 3. Keras Lamda Layer Visualization
-![lambdalayer][image6]
+![lambdalayer][image11]
 
 4. Keras Cropping Layer Visualization
-![cropping][image5]
+![cropping][image12]
 
 
 5. Usage of Data Generators.
