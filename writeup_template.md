@@ -216,15 +216,15 @@ Various data collection approaches.
 
 The overall strategy for deriving a model architecture was to collect enough data, transform the collected inputs and then apply the correct learning model with good hyper tunable parameters. 
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model using LENET architecture which did not give good results after enough trials. Then I tried using the NVIDIA Model it gave very good results, with both training and validation loss climbing down in the plotted loss chart.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model so that I used the dropout layers, collected more data, reduced the number of convolutions and then finally added more training to training data set (Which of course worked).
 
-Then I ... 
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track, At one point of time I saw that even though I converting the images from RGB to HSV, but I am doing this for every image, this caused some issues, more often than not vehicle fell of the track to reduce this I added the actual images to the training track without actually doing any transformation on them.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+One thing I learned is transformation are good for generalization but you can't keep transforming the images and hoping that your generalized model will work on any track. You need to process the images as it is and let the Neural network learn from it.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
@@ -261,10 +261,44 @@ If you look at the collected data histogram you can clearly see that the most of
 We can remove some of the 0 steering angle in the random fashion to get evenly distributed lines.
 
 ![Histogram2][image2]
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+
+After adding right, left and center images together and adding the correction, finally the histogram looks evenly distributed.
+![histogram3][image3]
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+After the collection process, I had X number of data points. I then preprocessed this data by following methods
+1. Adding the Image to image collection
+![original image][image4]
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
+
+2. Processing through the RGB2HSV 
+![rgb2hsv][image5]
+
+
+3. Keras Lamda Layer Visualization
+![lambdalayer][image6]
+
+4. Keras Cropping Layer Visualization
+![cropping][image5]
+
+
+5. Usage of Data Generators.
+
+Initially I loaded all the images to the memory and trained the model via fit and did not batch, but soon after watching the class videos I thought it would be good if I do batch processing and this way I can minimize the load on my system, not trying to load all the 8400 images at once.Python generator is a method or a technique that behaves like an iterator and loads items when needed using the yield that is like a return, but keeps all the generator's variables intact.Keras fit_generator() uses generators to only load data batch by batch for a more optimized and data conscious approach.
+
+
+#### Some things that are pending to do.
+
+1. Adding Image Normalization after each Keras Layer.
+2. Adding Random shadows 
+3. Adding random brightnees throughout the project
+4. Resizing the image before feeding to the Keras.
+5. Driving on Track 2 :-)
+
+Some of the Mistakes I did
+1. Upgrading to Keras 2.1 ....this caused of lot of heart burn
+2. Not focusing on the data rather thinking about the Model, I guess you need to know your data well before you decide on the Model.
+3. Adding random drop outs to reduce overfitting.
+4. Not killing off the training which was taking more than 8 hours and trying to figure out why it was taking so long
+5. Not signing up for AWS as second backup, incase my desktop system with GPU doesn't work.
