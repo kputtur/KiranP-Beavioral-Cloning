@@ -94,15 +94,19 @@ def augment_data (images, measurements):
 
     for image, steering_angle in zip(images, measurements):
         flipped_image, flipped_steering_angle = flip_image_steering(image, steering_angle)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-	
-	#update flipped image and measurements
+        image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    
+    #update flipped image and measurements
         augmented_images.append(flipped_image)
         augmented_measurements.append(flipped_steering_angle)
 
-	#update	HSV image and measurement
-        augmented_images.append(image)
+    #update    HSV image and measurement
+        augmented_images.append(image_hsv)
         augmented_measurements.append(steering_angle)
+        
+   #Add
+        augmented_images.append(image)
+        augmented_measurements.apped(steering_angle)
         
     return augmented_images, augmented_measurements
 
