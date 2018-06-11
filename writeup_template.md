@@ -158,13 +158,13 @@ There is no drop out since I thought this could be underfitting Model and there 
 This is the Training vs Validation Loss plotted
 ![trainingvsvalidation][image3]
 
-#### 2. Nvidia Model#####
-![NVIDIA Architecture](https://devblogs.nvidia.com/wp-content/uploads/2016/08/cnn-architecture-624x890.png) 
+#### 2. Nvidia Model
 
-
-
-Nvidia model shown above and which is widely discussed in the paper here : http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
+Nvidia model shown below and which is widely discussed in the paper here : http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
 https://devblogs.nvidia.com/deep-learning-self-driving-cars/
+
+
+![NVIDIA Architecture](https://devblogs.nvidia.com/wp-content/uploads/2016/08/cnn-architecture-624x890.png) 
 
 This model flows like this.
 1. First Layer for Normalization
