@@ -21,7 +21,7 @@ The goals / steps of this project are the following:
 [image2]: ./examples/lenet_black_model.png "LeNET Model "
 [image3]: ./examples/lenet_loss.jpg "LeNET Loss plotted "
 [image4]: ./examples/nvidia_plot_loss.png "NVIDIA Plotted Training vs Validation Losses"
-[image5]: ./examples/pverfitting.png "Over Fitting"
+[image5]: ./examples/overfitting.png "Over Fitting"
 [image6]: ./examples/histogram_1.png    "Histogram"
 [image7]: ./examples/histogram_2.png     "Histogram without Zero Lines"
 [image8]: ./examples/histogram_3.png     "Right, Left, Center images with correction"
