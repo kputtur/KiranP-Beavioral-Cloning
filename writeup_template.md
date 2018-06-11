@@ -179,14 +179,14 @@ This model flows like this.
 
 This shows the Plotted Training vs Validation Loss for Nvidia Model.
 
-![Nvidia Training Losses] [image4]
+![Nvidia Training Losses][image4]
 
 This also dependended on the training data, enough training data provided better fitting and lower validation loss compared to fewer training data.
 
 #### 2. Attempts to reduce overfitting in the model
 
 During the course of training I found out that while my training loss is low but validation loss seems to be mounting as you can see from the below figure
-![overfitting] [image5]
+![overfitting][image5]
 
 As per the class notes When the model predicts well on the training set but poorly on the validation set (for example, low mean squared error for training set, high mean squared error for validation set), this is evidence of overfitting. 
 
