@@ -145,7 +145,7 @@ Once the args are parsed, as per the args control would flow.
 
 I have tried two models one is 
 
-1. LENET Model 
+#### 1. LENET Model ####
 
 ![lenetloss][image2]
 
@@ -154,14 +154,14 @@ In the LeNET Model I start with Lambda layer, followed by the Cropping layer -> 
 
 There is no drop out since I thought this could be underfitting Model and there are no unnecessary additional tensors that we need to drop.
 
-![lenet Model][image2]
-
 
 This is the Training vs Validation Loss plotted
 ![trainingvsvalidation][image3]
 
-2. Nvidia Model
+#### 2. Nvidia Model#####
 ![NVIDIA Architecture](https://devblogs.nvidia.com/wp-content/uploads/2016/08/cnn-architecture-624x890.png) 
+
+
 
 Nvidia model shown above and which is widely discussed in the paper here : http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
 https://devblogs.nvidia.com/deep-learning-self-driving-cars/
