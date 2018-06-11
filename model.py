@@ -1,7 +1,6 @@
 import csv
 import os
 import cv2
-import pandas as pd
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,9 +14,6 @@ from random import shuffle
 from keras.models import Sequential  
 from keras.layers import Convolution2D, Flatten, Dense, Dropout, Lambda, Cropping2D
 from keras.layers import MaxPooling2D
-
-import json
-from keras.models import model_from_json, load_model
 
 
 def load_csv_file(path):
@@ -106,7 +102,7 @@ def augment_data (images, measurements):
         
    #Add
         augmented_images.append(image)
-        augmented_measurements.apped(steering_angle)
+        augmented_measurements.append(steering_angle)
         
     return augmented_images, augmented_measurements
 
