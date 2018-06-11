@@ -309,3 +309,9 @@ Some of the Mistakes I did
 3. Adding random drop outs to reduce overfitting.
 4. Not killing off the training which was taking more than 8 hours and trying to figure out why it was taking so long
 5. Not signing up for AWS as second backup, incase my desktop system with GPU doesn't work.
+
+
+###REFERENCES ###
+1. Discussion in the Udacity Slack Channel
+2. Nvidia Architecture https://devblogs.nvidia.com/deep-learning-self-driving-cars/
+3. Ideas from various sources such as stackoverflow, Keras documentation, Fellow Udacity members.
